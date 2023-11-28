@@ -25,7 +25,7 @@ The dependent measure used in the study was the [Warwick-Edinburgh Mental Well-B
 
 At [Przybylski & Weinstein's page for this study on the Open Science Framework](https://osf.io/82ybd/), you can find the [participant survey](https://osf.io/82ybd/) which asks a large number of additional questions (see page 14 for the WEMWBS questions and pages 4-5 for the questions about screen time). Within the same page you can also find the [raw data](https://osf.io/82ybd/); however, for the purpose of this exercise, you will be using local pre-processed copies of the data (see data folder). 
 
-Przybylski and Weinstein looked at multiple measures of screen time, but we will be focusing on smartphone use. They found that decrements in well-being started to appear when respondents reported more than one hour of weekly smartphone use.  Our question: Does the negative association between hours of use and well-being (beyond the one-hour point) differ for boys and girls?
+Przybylski and Weinstein looked at multiple measures of screen time, but we will be focusing on smartphone use. They found that decrements in well-being started to appear when respondents reported more than one hour of weekly smartphone use.  Our question: Does the negative association between hours of (smartphone) use and well-being (beyond the one-hour point) differ for boys and girls?
 
 Note that in this analysis, we have:
 
@@ -42,30 +42,26 @@ We want to estimate two slopes relating screen time to well-being, one for girls
 
 ## Set-up
 
-- Load in the `wellbeing.csv`, `participant_info.csv`, and `screen_time.csv` from your data folder
+- Load in the `wellbeing.csv`, `participant_info.csv`, and `screen_time.csv` file from your data folder. Save them as `wellbeing`, `pinfo` and `screen`. 
 
 ```{r}
 library("WebPower")
-library("see")
-library("performance")
-library("report")
+library("easystats")
 library("tidyverse")
 
 ```
 
 ##  Look at the data {#mulregression-a2}
 
-Take a look at the resulting tibbles `pinfo`, `wellbeing`, and `screen`.  The `wellbeing` tibble has information from the WEMWBS questionnaire; `screen` has information about screen time use on weekends (variables ending with `we`) and weekdays (variables ending with `wk`) for four types of activities: using a computer (variables starting with `Comph`; Q10 on the survey), playing video games (variables starting with `Comp`; Q9 on the survey), using a smartphone (variables starting with `Smart`; Q11 on the survey) and watching TV (variables starting with `Watch`; Q8 on the survey).  If you want more information about these variables, look at the items 8-11 on pages 4-5 of the the [PDF version of the survey on the OSF website](https://osf.io/82ybd/).
+Take a look at the tibble for `pinfo`, `wellbeing`, and `screen`.  The `wellbeing` tibble has information from the WEMWBS questionnaire; `screen` has information about screen time use on weekends (variables ending with `we`) and weekdays (variables ending with `wk`) for four types of activities: using a computer (variables starting with `Comph`; Q10 on the survey), playing video games (variables starting with `Comp`; Q9 on the survey), using a smartphone (variables starting with `Smart`; Q11 on the survey) and watching TV (variables starting with `Watch`; Q8 on the survey).  If you want more information about these variables, look at the items 8-11 on pages 4-5 of the the [PDF version of the survey on the OSF website](https://osf.io/82ybd/).
 
 - The variable corresponding to *gender* is located in the table named `pinfo`and this variable is called `male`. 
 
 -  Individual participants in this dataset are identified by the variable named `Serial`.  This variable will allow us to link information across the three tables.
 
-> Run `summary()` on the three data-sets. Are there any missing data points? 
+> Run `summary()` on the three data-sets. Are there any missing data points? If so, get rid of them. 
 
 ```{r}
-
-
 
 ```
 
@@ -93,8 +89,12 @@ For this analysis, we are going to collapse weekday and weekend use for smartpho
 
 >  Create a new table, `smarttot`, that has the that has mean number of hours per day of smartphone use for each participant, averaged over weekends/weekdays. 
 
-* You will need to filter the dataset to only include smartphone use and not other technologies. 
+* You will need to filter the dataset to only include smartphone use and not other technologies.
+
+* You will need to use pivot_longer
+
 * You will also need to group the results by the participant ID (i.e., `serial`). 
+
 * The final data-set should have two variables: `Serial` (the participant) and `tothours`.
 
 * You will need to use the data-set `screen_time` to do this.
@@ -170,15 +170,28 @@ For this analysis, we are going to collapse weekday and weekend use for smartpho
 
 ```
 
+## Visualization
+
+> use the `interactions` package or ggpredict to visualize the interaction effect. 
+
+```{r}
+
+```
+
 ##  Write-up
 
-> Provide a write-up of the regression model. Please make to include all relevant statsitics. 
+> Provide a write-up/summary of the results in APA style
 
 ## Power
 
-Finally, we'll calculate power and effect size as usual.
+Finally, we'll calculate power
 
-> Calculate the minimum effect size we could reliably observe given our sample size and design but for 99% power using a power calculator. 
+> Calculate the minimum effect size we could reliably observe  given our sample size and design, but for 99% power using a power calculator. 
+
+```{r}
+
+
+```
 
 # Finished! 
 
