@@ -1,5 +1,5 @@
 ---
-title: "Lab 9: Interactions"
+title: "Lab 9: Interactions I"
 subtitle: "Princeton University"
 author: "INSERT NAME"
 date: 'Updated:`r Sys.Date()`'
@@ -48,10 +48,13 @@ We want to estimate two slopes relating screen time to well-being, one for girls
 library("WebPower")
 library("easystats")
 library("tidyverse")
+library("broom")
+library("emmeans")
+library("interactions")
 
 ```
 
-##  Look at the data {#mulregression-a2}
+##  Look at the data 
 
 Take a look at the tibble for `pinfo`, `wellbeing`, and `screen`.  The `wellbeing` tibble has information from the WEMWBS questionnaire; `screen` has information about screen time use on weekends (variables ending with `we`) and weekdays (variables ending with `wk`) for four types of activities: using a computer (variables starting with `Comph`; Q10 on the survey), playing video games (variables starting with `Comp`; Q9 on the survey), using a smartphone (variables starting with `Smart`; Q11 on the survey) and watching TV (variables starting with `Watch`; Q8 on the survey).  If you want more information about these variables, look at the items 8-11 on pages 4-5 of the the [PDF version of the survey on the OSF website](https://osf.io/82ybd/).
 
@@ -59,7 +62,7 @@ Take a look at the tibble for `pinfo`, `wellbeing`, and `screen`.  The `wellbein
 
 -  Individual participants in this dataset are identified by the variable named `Serial`.  This variable will allow us to link information across the three tables.
 
-> Run `summary()` on the three data-sets. Are there any missing data points? If so, get rid of them. 
+> Run `summary()` on the three data-sets. Are there any missing data points?
 
 ```{r}
 
@@ -77,13 +80,18 @@ The WEMWBS well-being score is simply the *sum* of all the items.
 
 > **Sanity check:** Verify for yourself that the scores all fall in the 14-70 range.  Przybylski and Weinstein reported a mean of 47.52 with a standard deviation of 9.55. Can you reproduce these values?
 
+```{r}
+
+```
+
+
 > Now visualise the distribution of `tot_wellbeing` in a histogram
 
 ```{r}
 
 ```
 
-## Smartphone and well-being for boys and girls {#mulregression-a5}
+## Smartphone and well-being for boys and girls
 
 For this analysis, we are going to collapse weekday and weekend use for smartphones.
 
@@ -103,7 +111,7 @@ For this analysis, we are going to collapse weekday and weekend use for smartpho
 
 ```
 
-> Next, create a new tibble called `smart_wb` that only includes (filters) participants from `smarttot` who used a smartphone for more than one hour per day each week, and then combine (join) this table with the information in `wemwbs` and `pinfo`.**
+> Next, create a new tibble called `smart_wb` that only includes (filters) participants from `smarttot` who used a smartphone for more than one hour per day each week, and then combine (using inner_join) this table with the information in `wemwbs` and `pinfo`.** An inner join only keeps observations from X (here smarttot) that have a matching key in Y (`wemwbs` and `pinfo`). So if Serial row (ID) is absent from `wemwbs` or `pinfo` it will throw out that observation. 
 
 `r hide("Hint")`
 - `filter()` then `inner_join()` then another `inner_join()`
@@ -120,6 +128,8 @@ For this analysis, we are going to collapse weekday and weekend use for smartpho
 >  Use `mutate` to add two new variables to `smart_wb`: `tothours_c`, calculated as a mean-centered version of the `tothours` predictor; and `male_dev`, recoded as -.5 for female and .5 for male.
 
 ```{r}
+
+
 
 ```
 
@@ -149,7 +159,7 @@ For this analysis, we are going to collapse weekday and weekend use for smartpho
 
 ```
 
-> Follow-up with a simple effects analysis, if the interaction is significant 
+> Follow-up with a simple effects analysis. Interpret the simple effects. 
 
 ```{r}
 
@@ -164,15 +174,17 @@ For this analysis, we are going to collapse weekday and weekend use for smartpho
 - The residuals should be normally distributed
 - Multicollinearity: predictor variables should not be too highly correlated
 
-> Check assumptions of your model, noting any deviations. 
+> Check assumptions of your model.
 
 ```{r}
 
 ```
 
+> Are any of the assumptions violated?
+
 ## Visualization
 
-> use the `interactions` package or ggpredict to visualize the interaction effect. 
+> use the `interactions` package to visualize the interaction effect. 
 
 ```{r}
 
@@ -184,7 +196,7 @@ For this analysis, we are going to collapse weekday and weekend use for smartpho
 
 ## Power
 
-Finally, we'll calculate power
+- Finally, we'll calculate power
 
 > Calculate the minimum effect size we could reliably observe  given our sample size and design, but for 99% power using a power calculator. 
 
