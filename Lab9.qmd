@@ -10,7 +10,6 @@ html:
     code-fold: true
     code-tools: true
 ---
-
 # Lab 9
 
 There is currently much debate (and hype) surrounding smartphones and their effects on well-being, especially with regard to children and teenagers.  We'll be looking at data from this recent study of English adolescents:
@@ -133,13 +132,11 @@ For this analysis, we are going to collapse weekday and weekend use for smartpho
 
 ```
 
-> Finally, recode and `male` and `male_dev` as factors, so that R knows not to treat them as a real numbers.
-
+> Finally, recode and `male`` as factor, so that R knows not to treat them as a real numbers.
 
 ```{r}
 
 ```
-
 
 ## Visualise the relationship 
 
