@@ -198,7 +198,7 @@ For this analysis, we are going to collapse weekday and weekend use for smartpho
 
 - Finally, we'll calculate power
 
-> Calculate the minimum effect size we could reliably observe  given our sample size and design, but for 99% power using a power calculator. 
+> Calculate the minimum effect size we could reliably observe given our sample size and design, but for 99% power using a power calculator. 
 
 ```{r}
 
